@@ -1,0 +1,8 @@
+version: "2.0"
+services:
+  web:
+    build: .
+    hostname: web-server
+    domainname: mydomain.com
+    ports:
+      - "8080:80"

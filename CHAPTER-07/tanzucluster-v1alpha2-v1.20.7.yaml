@@ -1,0 +1,22 @@
+apiVersion: run.tanzu.vmware.com/v1alpha2
+kind: TanzuKubernetesCluster
+metadata:
+ name: tkg-cluster-01
+ namespace: cormac-ns
+spec:
+ topology:
+   controlPlane:
+     replicas: 1
+     vmClass: guaranteed-small
+     storageClass: vsan-default-storage-policy
+     tkr:
+       reference:
+         name: v1.20.7---vmware.1-tkg.1.7fb9067
+   nodePools:
+   - name: worker-pool-1
+     replicas: 2
+     vmClass: guaranteed-small
+     storageClass: vsan-default-storage-policy
+     tkr:
+       reference:
+         name: v1.20.7---vmware.1-tkg.1.7fb9067

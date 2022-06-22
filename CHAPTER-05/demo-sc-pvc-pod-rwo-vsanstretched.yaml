@@ -1,0 +1,38 @@
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: csi-vsan-sc
+provisioner: csi.vsphere.vmware.com
+allowVolumeExpansion: true
+parameters:
+  storagepolicyname: "StretchedClusterPolicy"
+  csi.storage.k8s.io/fstype: "ext4"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: csivsan-pvc-vsan-claim
+spec:
+  storageClassName: csi-vsan-sc
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: csi-vsan-pod
+spec:
+  containers:
+  - name: busybox
+    image: busybox
+    volumeMounts:
+    - name: csivsan-vol
+      mountPath: "/demo"
+    command: [ "sleep", "1000000" ]
+  volumes:
+    - name: csivsan-vol
+      persistentVolumeClaim:
+        claimName: csivsan-pvc-vsan-claim

@@ -1,0 +1,13 @@
+ingress:
+  enabled: true
+  virtual_host_fqdn: "prometheus-tkgs-cork.rainpole.com"
+  prometheus_prefix: "/"
+  alertmanager_prefix: "/alertmanager/"
+  prometheusServicePort: 80
+  alertmanagerServicePort: 80
+prometheus:
+  pvc:
+    storageClassName: vsan-default-storage-policy
+alertmanager:
+  pvc:
+    storageClassName: vsan-default-storage-policy

@@ -1,0 +1,40 @@
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: csisnaps-sc
+  annotations:
+    storageclass.kubernetes.io/is-default-class: "true"
+provisioner: csi.vsphere.vmware.com
+allowVolumeExpansion: true
+parameters:
+  storagepolicyname: "vSAN Default Storage Policy"
+  csi.storage.k8s.io/fstype: "ext4"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: csisnaps-pvc-vsan-claim
+spec:
+  storageClassName: csisnaps-sc
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: csisnaps-pod
+spec:
+  containers:
+  - name: busybox
+    image: busybox
+    volumeMounts:
+    - name: csisnaps-vol
+      mountPath: "/demo"
+    command: [ "sleep", "1000000" ]
+  volumes:
+    - name: csisnaps-vol
+      persistentVolumeClaim:
+        claimName: csisnaps-pvc-vsan-claim

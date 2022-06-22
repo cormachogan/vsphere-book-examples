@@ -1,0 +1,15 @@
+fluent_bit:
+  service: |
+    [Service]
+      Flush         5
+ 
+  outputs: |
+    [OUTPUT]
+      Name          es
+      Match         *
+      Host          100.66.166.36
+      Port          9200
+      Index         cjh_index
+      Type          doc
+ 
+  plugins: "es"

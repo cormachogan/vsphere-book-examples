@@ -1,0 +1,8 @@
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: my-second-sc
+provisioner: csi.vsphere.vmware.com
+parameters:
+  storagepolicyname: "vSAN Default Storage Policy"
+  csi.storage.k8s.io/fstype: "nfs4"

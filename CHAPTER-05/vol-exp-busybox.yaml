@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: vol-exp-busybox
+spec:
+  containers:
+  - image: "k8s.gcr.io/busybox"
+    command:
+      - sleep
+      - "3600"
+    imagePullPolicy: Always
+    name: busybox
+    volumeMounts:
+    - name: vol-exp
+      mountPath: "/mnt/volume1"
+  restartPolicy: Always
+  volumes:
+  - name: vol-exp
+    persistentVolumeClaim:
+      claimName: vol-exp-pvc
+      readOnly: false

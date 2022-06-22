@@ -1,0 +1,15 @@
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: zone-a-sc
+provisioner: csi.vsphere.vmware.com
+parameters:
+  storagepolicyname: vsan-a
+allowedTopologies:
+  - matchLabelExpressions:
+      - key: topologies.csi.vmware.com/zone
+        values:
+         - zone-a
+      - key: topologies.csi.vmware.com/region
+        values:
+          - region-1

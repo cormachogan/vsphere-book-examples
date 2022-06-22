@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: vsphere-cloud-secret
+  labels:
+    vsphere-cpi-infra: secret
+    component: cloud-controller-manager
+  namespace: kube-system
+stringData:
+  192.168.51.1.username: "Administrator@vSphere.local"
+  192.168.51.1.password: "VMware123!"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: vsphere-cloud-config
+  labels:
+    vsphere-cpi-infra: config
+    component: cloud-controller-manager
+  namespace: kube-system
+data:
+  vsphere.conf: |
+    # Global properties in this section will be used for all specified vCenters unless overriden in VirtualCenter section.
+    global:
+      port: 443
+      # set insecureFlag to true if the vCenter uses a self-signed cert
+      insecureFlag: true
+      # settings for using k8s secret
+      secretName: vsphere-cloud-secret
+      secretNamespace: kube-system
+
+    # vcenter section
+    vcenter:
+      vCenter-01:
+        server: 192.168.51.1
+        user: Administrator@vsphere.local
+        password: VMware123!
+        datacenters:
+          - MyDatacenter

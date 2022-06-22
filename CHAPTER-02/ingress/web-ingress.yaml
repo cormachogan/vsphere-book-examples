@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: web
+spec:
+  rules:
+  - host: web.mydomain.com
+    http:
+      paths:
+      - path: /index-a.html # This page must exist on the A server
+        pathType: Prefix
+        backend:
+          service:
+            name: web-a
+            port: 
+              number: 80
+      - path: /index-b.html # This page must exist on the B server
+        pathType: Prefix
+        backend:
+          service: 
+            name: web-b
+            port: 
+              number: 80

@@ -1,0 +1,16 @@
+namespace: tanzu-system-service-discovery
+deployment:
+  args:
+    - --registry=txt
+    - --txt-prefix=external-dns-
+    - --txt-owner-id=tanzu
+    - --provider=rfc2136
+    - --rfc2136-host=192.168.51.252
+    - --rfc2136-port=53
+    - --rfc2136-zone=rainpole.com
+    - --rfc2136-insecure
+    - --rfc2136-tsig-axfr
+    - --source=service
+    - --source=contour-httpproxy
+    - --source=ingress
+    - --domain-filter=rainpole.com

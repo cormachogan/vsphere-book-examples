@@ -1,0 +1,16 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: busybox-persistent-pod
+spec:
+  containers:
+  - name: busybox
+    image: busybox
+    volumeMounts:
+    - name: demo-vol
+      mountPath: "/demo"
+    command: [ "sleep", "1000000" ]
+  volumes:
+    - name: demo-vol
+      persistentVolumeClaim:
+        claimName: my-first-pvc

@@ -1,0 +1,15 @@
+namespace: tanzu-system-dashboard
+ingress:
+  virtual_host_fqdn: "graf-tkgs-cork.rainpole.com"
+grafana:
+  config:
+    datasource_yaml: |-
+      apiVersion: 1
+      datasources:
+        - name: Prometheus
+          type: prometheus
+         url: prometheus-server.tanzu-system-monitoring.svc.cluster.local
+          access: proxy
+          isDefault: true
+  pvc:
+    storageClassName: vsan-default-storage-policy

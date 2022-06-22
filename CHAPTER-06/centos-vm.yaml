@@ -1,0 +1,26 @@
+apiVersion: vmoperator.vmware.com/v1alpha1
+kind: VirtualMachine
+metadata:
+  name: centos-vm
+  namespace: cormac-ns
+spec:
+  imageName: centos-stream-8-vmservice-v1alpha1-1638306496810
+  className: best-effort-small
+  powerState: poweredOn
+  storageClass: vsan-default-storage-policy
+  networkInterfaces:
+  - networkName: vm-62-dpg
+    networkType: vsphere-distributed
+  vmMetadata:
+    configMapName: centos-vm-cfm
+    transport: OvfEnv
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+    name: centos-vm-cfm
+    namespace: cormac-ns
+data:
+  user-data: |
+    I2NxxxxxxxxCIK
+  hostname: centos-vm
