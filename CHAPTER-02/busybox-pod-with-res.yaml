@@ -5,7 +5,7 @@ metadata:
 spec:
   containers:
   - name: busybox
-    image: 10.203.182.129/demo-ns/busybox:latest
+    image: busybox:latest
     command: [ "sleep", "1000000" ]
     resources:
       requests:
